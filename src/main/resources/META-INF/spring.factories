@@ -1,0 +1,4 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+top.felixfly.vsts.vstspullrequest.autoconfigure.PullRequestAutoConfiguration,\
+top.felixfly.vsts.vstspullrequest.autoconfigure.EventBusAutoConfiguration
