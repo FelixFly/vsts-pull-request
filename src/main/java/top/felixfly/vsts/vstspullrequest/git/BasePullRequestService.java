@@ -119,6 +119,19 @@ public abstract class BasePullRequestService implements PullRequestService {
 
         List<JSONObject> values = contentObject.getObject("value", new TypeReference<List<JSONObject>>() {
         }.getType());
+        Set<String> workItemComments = values.stream().map(item -> {
+            String comment = item.getString("comment");
+            // PR信息给去掉
+            if (comment.contains("PR")) {
+                return "";
+            }
+            Matcher matcher = PATTERN.matcher(comment);
+            if (!matcher.find()) {
+                return "";
+            }
+            return comment;
+        }).filter(StringUtils::isNotEmpty).collect(Collectors.toSet());
+
         Set<String> workItemIds = values.stream().flatMap(item -> {
             String comment = item.getString("comment");
             // PR信息给去掉
@@ -144,7 +157,7 @@ public abstract class BasePullRequestService implements PullRequestService {
             return false;
         }
         request.put("workItemRefs", workItemRefs);
-        request.put("description", " " + String.join(" ", workItemIds));
+        request.put("description", String.join("\n", workItemComments));
         // 发布事件
         eventBus.post(workItemIds);
         return true;

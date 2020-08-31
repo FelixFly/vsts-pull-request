@@ -26,10 +26,6 @@ public class EventBusAutoConfiguration {
     @Autowired
     private RestTemplate workItemRestTemplate;
 
-    private ExecutorService executors = Executors.newFixedThreadPool(10);
-
-
-
     @PostConstruct
     public void registerEvent() {
         EventBus eventBus = eventBus();
@@ -38,8 +34,15 @@ public class EventBusAutoConfiguration {
 
     @Bean
     public EventBus eventBus() {
-        return new AsyncEventBus(executors);
+        return new AsyncEventBus(executors());
     }
+
+
+    @Bean
+    public ExecutorService executors(){
+        return Executors.newFixedThreadPool(5);
+    }
+
 
     @Bean
     public WorkItemEvent workItemEvent(){
@@ -48,7 +51,7 @@ public class EventBusAutoConfiguration {
 
     @PreDestroy
     public void destroy(){
-        executors.shutdown();
+        executors().shutdown();
         eventBus().unregister(workItemEvent());
     }
 }

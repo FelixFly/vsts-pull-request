@@ -36,9 +36,7 @@ public class TaskPullRequestServiceImpl extends BasePullRequestService {
 
     @Override
     protected void autoOtherApprove(String projectName, String pullRequestId) {
-        // 审批
-        autoApprove(projectName, pullRequestId, this.pullRequestProperties.getPullUser().getUserId(),
-                this.restTemplate);
+
     }
 
     @Override
