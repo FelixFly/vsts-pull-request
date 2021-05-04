@@ -10,14 +10,17 @@ import top.felixfly.vsts.vstspullrequest.constant.BranchNameEnum;
 import top.felixfly.vsts.vstspullrequest.git.BasePullRequestService;
 
 /**
- * Deploy分支合并
+ * RC_his分支合并
  *
  * @author FelixFly <chenglinxu@yeah.net>
  * @date 2020/3/19
  */
 @Slf4j
 @Service
-public class DeployPullRequestServiceImpl extends BasePullRequestService {
+public class RCHisPullRequestServiceImpl extends BasePullRequestService {
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Autowired
     private RestTemplate yjRestTemplate;
@@ -27,15 +30,11 @@ public class DeployPullRequestServiceImpl extends BasePullRequestService {
 
     @Override
     public boolean isSupport(String targetBranch) {
-        return targetBranch.equals(BranchNameEnum.DEPLOY.getValue());
+        return targetBranch.startsWith(BranchNameEnum.RC_HIS.getValue());
     }
 
     @Override
     protected boolean checkBranch(String projectName, String sourceBranch, String targetBranch) {
-        /*if (!sourceBranch.startsWith(BranchNameEnum.DEVELOP.getValue())) {
-            log.error("PR到deploy分支必须是develop分支，当前分支是{}", sourceBranch);
-            return false;
-        }*/
         return true;
     }
 
@@ -46,6 +45,9 @@ public class DeployPullRequestServiceImpl extends BasePullRequestService {
 
     @Override
     protected void autoOtherApprove(String projectName, String pullRequestId) {
+        // 审批
+        autoApprove(projectName, pullRequestId, this.pullRequestProperties.getPullUser().getUserId(),
+                this.restTemplate);
         // 需要另外一个人审批
         autoApprove(projectName, pullRequestId, this.pullRequestProperties.getApproveUser().getUserId(),
                 this.yjRestTemplate);

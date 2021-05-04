@@ -51,7 +51,7 @@ public class EventBusAutoConfiguration {
 
     @PreDestroy
     public void destroy(){
-        executors().shutdown();
         eventBus().unregister(workItemEvent());
+        executors().shutdown();
     }
 }

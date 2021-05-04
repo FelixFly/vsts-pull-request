@@ -21,6 +21,10 @@ public enum BranchNameEnum {
      */
     DEVELOP("develop"),
     /**
+     * develop_deploy
+     */
+    DEVELOP_DEPLOY("develop_deploy"),
+    /**
      * DEVELOP_IPT
      */
     DEVELOP_IPT("develop_ipt"),
@@ -29,9 +33,17 @@ public enum BranchNameEnum {
      */
     DEVELOP_HIS("develop_his"),
     /**
+     * RC_his
+     */
+    RC_HIS("RC_his"),
+    /**
      * TASK
      */
     TASK("task"),
+    /**
+     * TASK_DEV
+     */
+    TASK_DEV("task_dev"),
     /**
      * 1230 迭代
      */

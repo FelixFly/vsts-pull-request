@@ -56,9 +56,6 @@ public class DevelopHisPullRequestServiceImpl extends BasePullRequestService {
     @Override
     protected void createBranchIfNecessary(String projectName, JSONObject defaultRequest, String sourceBranch,
                                            String targetBranch) {
-        if (!checkIfNecessary(sourceBranch)) {
-            return;
-        }
         createBranch(projectName, defaultRequest, sourceBranch, targetBranch);
     }
 }

@@ -24,6 +24,9 @@ public class RCPullRequestServiceImpl extends BasePullRequestService {
     private RestTemplate restTemplate;
 
     @Autowired
+    private RestTemplate yjRestTemplate;
+
+    @Autowired
     private PullRequestProperties pullRequestProperties;
 
     @Override
@@ -47,11 +50,17 @@ public class RCPullRequestServiceImpl extends BasePullRequestService {
 
     @Override
     protected void autoOtherApprove(String projectName, String pullRequestId) {
-
+        // 开发人审批
+        autoApprove(projectName, pullRequestId, this.pullRequestProperties.getApproveUser().getUserId(),
+                this.yjRestTemplate);
+        // 代码审核审批
+        autoApprove(projectName, pullRequestId, this.pullRequestProperties.getPullUser().getUserId(),
+                this.restTemplate);
     }
 
     @Override
     protected void createBranchIfNecessary(String projectName, JSONObject defaultRequest, String sourceBranch,
                                            String targetBranch) {
+        //createBranch(projectName, defaultRequest, sourceBranch, targetBranch);
     }
 }

@@ -10,14 +10,14 @@ import top.felixfly.vsts.vstspullrequest.constant.BranchNameEnum;
 import top.felixfly.vsts.vstspullrequest.git.BasePullRequestService;
 
 /**
- * Deploy分支合并
+ * develop_deploy分支合并
  *
  * @author FelixFly <chenglinxu@yeah.net>
  * @date 2020/3/19
  */
 @Slf4j
 @Service
-public class DeployPullRequestServiceImpl extends BasePullRequestService {
+public class DevelopDeployPullRequestServiceImpl extends BasePullRequestService {
 
     @Autowired
     private RestTemplate yjRestTemplate;
@@ -27,7 +27,7 @@ public class DeployPullRequestServiceImpl extends BasePullRequestService {
 
     @Override
     public boolean isSupport(String targetBranch) {
-        return targetBranch.equals(BranchNameEnum.DEPLOY.getValue());
+        return targetBranch.equals(BranchNameEnum.DEVELOP_DEPLOY.getValue());
     }
 
     @Override
